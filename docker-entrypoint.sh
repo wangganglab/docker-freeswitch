@@ -10,7 +10,6 @@ do
   sed -i "s|domain=$${local_ip_v4}|domain=${FS_DOMAIN}|g" ${FILENAME}
   sed -i "s|<X-PRE-PROCESS cmd=\"stun-set\" data=\"external_rtp_ip=stun:stun.freeswitch.org\"/>|<X-PRE-PROCESS cmd=\"set\" data=\"external_rtp_ip=${FS_EXT_IP}\"/>|g" ${FILENAME}
   sed -i "s|<X-PRE-PROCESS cmd=\"stun-set\" data=\"external_sip_ip=stun:stun.freeswitch.org\"/>|<X-PRE-PROCESS cmd=\"set\" data=\"external_sip_ip=${FS_EXT_IP}\"/>|g" ${FILENAME}
-  # echo "<X-PRE-PROCESS cmd=\"set\" data=\"certs_dir=/usr/local/freeswitch/tls\"/>" >> ${FILENAME}
 done
 
 for FILENAME in `find /usr/local/freeswitch -type f -iname 'event_socket.conf.xml'`

@@ -1,0 +1,37 @@
+# Use this file on macOS
+
+version: "3"
+
+services:
+  xswitch:
+    container_name: xswitch
+    image: registry.cn-shanghai.aliyuncs.com/xswitch/freeswitch:1.0.1
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200m"
+    restart: always
+    env_file: .env
+    ulimits:
+      core: -1
+    privileged: true
+    stdin_open: true
+    tty: true
+    ports:
+      - "${FS_RTP_START_PORT}-${FS_RTP_END_PORT}:${FS_RTP_START_PORT}-${FS_RTP_END_PORT}/udp"
+      - "${FS_INTERNAL_SIP_PORT}:${FS_INTERNAL_SIP_PORT}/udp"
+      - "${FS_INTERNAL_SIP_PORT}:${FS_INTERNAL_SIP_PORT}"
+      - "${FS_INTERNAL_TLS_PORT}:${FS_INTERNAL_TLS_PORT}"
+      - "${FS_EXTERNAL_SIP_PORT}:${FS_EXTERNAL_SIP_PORT}/udp"
+      - "${FS_EXTERNAL_SIP_PORT}:${FS_EXTERNAL_SIP_PORT}"
+      - "${FS_EXTERNAL_TLS_PORT}:${FS_EXTERNAL_TLS_PORT}"
+      - "${FS_ESL_PORT}:${FS_ESL_PORT}"
+      # - "${VERTO_WS_PORT}:${VERTO_WS_PORT}"
+      # - "${VERTO_WSS_PORT}:${VERTO_WSS_PORT}"
+    volumes:
+      - ./data/log:/usr/local/freeswitch/log
+      - ./data/storage:/usr/local/freeswitch/storage
+      - ./data/sounds:/usr/local/freeswitch/sounds
+    # depends_on:
+    #   - xswitch-pg

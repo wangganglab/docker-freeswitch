@@ -2,6 +2,7 @@ FROM debian:bullseye
 
 # 安装编译FreeSwitch，所需要依赖环境
 ENV TOKEN=pat_CKj8GjohjcGkU3JEMsuAzfri
+# RUN sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list
 ADD ./sources.list /etc/apt/sources.list
 RUN apt-get clean && apt-get update && apt-get install -yq gnupg2 wget ca-certificates lsb-release vim sngrep
 RUN wget --http-user=signalwire --http-password=$TOKEN -O /usr/share/keyrings/signalwire-freeswitch-repo.gpg https://freeswitch.signalwire.com/repo/deb/debian-release/signalwire-freeswitch-repo.gpg

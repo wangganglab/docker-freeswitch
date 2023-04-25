@@ -1,0 +1,23 @@
+# This file extends docker-compose.yml
+version: "3"
+
+services:
+  xswitch:
+    container_name: xswitch
+    image: registry.cn-shanghai.aliyuncs.com/xswitch/freeswitch:${FS_VERSION}
+    env_file: .env
+    network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "200m"
+    restart: always
+    ulimits:
+      core: -1
+    privileged: true
+    stdin_open: true
+    tty: true
+    volumes:
+      # - ./conf/:/usr/local/freeswitch/conf
+      - ./log/:/usr/local/freeswitch/log/
